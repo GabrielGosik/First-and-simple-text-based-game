@@ -297,6 +297,72 @@ int main()
     cin.ignore();
     system("CLS");
 
+    string interactionPassive;
+
+    do {
+        cout << "You are in your bedroom." << endl;
+        Sleep(1000);
+        cout << "You see a mirror, a bed, a wardrobe and a door." << endl;
+        Sleep(1000);
+        cout << "Type 'interact', 'use' or 'go' to interact with objects." << endl << "?>";
+        cin >> interactionPassive;
+
+        if (interactionPassive == "interact mirror") {
+            cout << "You come up to the mirror" << endl;
+            Sleep(1000);
+            cout << "Even though it is a bit dusty, you can see yourself in it." << endl;
+            Sleep(1000);
+        }
+        else if (interactionPassive == "interact bed") {
+            cout << "You come up to the bed" << endl;
+            Sleep(1000);
+            cout << "It's a bed. You don't feel tired for now." << endl;
+            Sleep(1000);
+        }
+        else if (interactionPassive == "interact wardrobe") {
+            cout << "You come up to the wardrobe" << endl;
+            Sleep(1000);
+            cout << "You see your clothes in it. Old and used" << endl;
+            Sleep(1000);
+        }
+        else if (interactionPassive == "interact door") {
+            cout << "You come up to the door" << endl;
+            Sleep(1000);
+            cout << "You can go to living room. To do that use command 'go'" << endl;
+            Sleep(1000);
+
+        }
+        else if (interactionPassive == "use mirror") {
+			cout << "How do you think you can use that besides looking at yourself?" << endl;
+        }
+		else if (interactionPassive == "use bed") {
+			cout << "You are not tired." << endl;
+		}
+		else if (interactionPassive == "use wardrobe") {
+			cout << "You don't need to change your clothes right now." << endl;
+		}
+		else if (interactionPassive == "use door") {
+			cout << "You go to Living room." << endl;
+
+		}
+		else if (interactionPassive == "go living room" || interactionPassive == "go Living room" || interactionPassive == "go Living Room") {
+			cout << "You go to living room." << endl;
+			Sleep(1000);
+		}
+        else {
+            cout << "You can't do that." << endl;
+        }
+
+	} while (interactionPassive != "go living room" || interactionPassive !="go Living room" || interactionPassive !="go Living Room" || interactionPassive !="use door");
+    
+    do {
+		cout << "You are in the living room." << endl;
+		Sleep(500);
+		cout << "It's a bit empty, since you moved important stuff to your basement, but at least there are kitchen utensils." << endl;
+		Sleep(500);
+		cout << "Speaking of which, you feel a bit hungry." << endl;
+    } while ();
+
     return 0;
     
 }
