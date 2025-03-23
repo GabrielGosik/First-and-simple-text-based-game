@@ -33,6 +33,7 @@ class player {
 
 int main()
 {
+    bool hunger = true;
     string charName;
     char nameChoice;
     int nameChoiceInt = 0;
@@ -358,12 +359,26 @@ int main()
     do {
 		cout << "You are in the living room." << endl;
 		Sleep(500);
-		cout << "It's a bit empty, since you moved important stuff to your basement, but at least there are kitchen utensils." << endl;
+		cout << "It's a bit empty, since you moved important stuff to your basement, but at least there are kitchen utensils in your kitchen." << endl;
+        cout << "...or rather what's left of it." << endl;
 		Sleep(500);
-		cout << "Speaking of which, you feel a bit hungry." << endl;
+        if(hunger) cout << "Speaking of which, you feel a bit hungry." << endl;
+        cout << "Oh, and also there are two doors. One goes to bathroom and the other one goes to basement." << endl;
         cout << "?>";
         cin >> interactionPassive;
-    } while (interactionPassive == "0");
+        if (interactionPassive == "interact kitchen" || interactionPassive == "use kitchen") {
+            cout << "You prepare yourself some food. You don't feel hunger anymore" << endl;
+            hunger = true;
+        }
+        else if (interactionPassive == "use door") {
+            cout << "Which one?" << endl << "?>";
+            cin >> interactionPassive;
+            if (interactionPassive == "bathroom" || interactionPassive == "Bathroom") {
+                cout << "You go to bathroom" << endl;
+                interactionPassive = "bathroom";
+            }
+        }
+    } while (interactionPassive == "");
 
     return 0;
     
