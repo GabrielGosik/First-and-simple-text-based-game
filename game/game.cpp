@@ -361,7 +361,9 @@ int main()
 		cout << "It's a bit empty, since you moved important stuff to your basement, but at least there are kitchen utensils." << endl;
 		Sleep(500);
 		cout << "Speaking of which, you feel a bit hungry." << endl;
-    } while ();
+        cout << "?>";
+        cin >> interactionPassive;
+    } while (interactionPassive == "0");
 
     return 0;
     
