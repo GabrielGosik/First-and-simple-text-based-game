@@ -1,9 +1,10 @@
 ﻿#include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdio.h>
 #include <time.h>
 #include <dos.h>
 #include <windows.h>
+#include <string>
 #ifdef _WIN32
 #include <io.h>
 #define access _access
@@ -11,6 +12,7 @@
 #else
 #include <unistd.h>
 #endif
+
 using namespace std;
 
 class enemy {
@@ -299,67 +301,80 @@ int main()
     cin.ignore();
     system("CLS");
 
-    string interactionPassive;
+    int interactionPassive;
+    string interactionRoom;
     player player
         ; //Creating player object
     do {
-		do { //Bedroom section
+        do { //Bedroom section
             cout << "You are in your bedroom." << endl;
             Sleep(1000);
             cout << "You see a mirror, a bed, a wardrobe and a door." << endl;
             Sleep(1000);
-            cout << "Type 'interact', 'use' or 'go' to interact with objects." << endl << "?>";
+            cout << "What do you want to do? (type in correct number)." << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
             cin >> interactionPassive;
 
-            if (interactionPassive == "interact mirror") {
-                cout << "You come up to the mirror" << endl;
-                Sleep(1000);
-                cout << "Even though it is a bit dusty, you can see yourself in it." << endl;
-                Sleep(1000);
-            }
-            else if (interactionPassive == "interact bed") {
-                cout << "You come up to the bed" << endl;
-                Sleep(1000);
-                cout << "It's a bed. You don't feel tired for now." << endl;
-                Sleep(1000);
-            }
-            else if (interactionPassive == "interact wardrobe") {
-                cout << "You come up to the wardrobe" << endl;
-                Sleep(1000);
-                cout << "You see your clothes in it. Old and used" << endl;
-                Sleep(1000);
-            }
-            else if (interactionPassive == "interact door") {
-                cout << "You come up to the door" << endl;
-                Sleep(1000);
-                cout << "You can go to living room. To do that use command 'go'" << endl;
-                Sleep(1000);
+            if (interactionPassive == 1) {
+                cout << "What do you want to interact with?" << endl << "1. Mirror" << endl << "2. Bed" << endl << "3. Wardrobe" << endl << "4. Door" << "?>";
+                cin >> interactionPassive;
+                if (interactionPassive == 1) {
+                    cout << "You come up to the mirror" << endl;
+                    Sleep(1000);
+                    cout << "Even though it is a bit dusty, you can see yourself in it." << endl;
+                    Sleep(1000);
+                    cout << "Despite everything, it is still you." << endl;
+                }
+                else if (interactionPassive == 2) {
+                    cout << "You come up to the bed" << endl;
+                    Sleep(1000);
+                    cout << "It's a bed. You don't feel tired for now." << endl;
+                    Sleep(1000);
+                }
+                else if (interactionPassive == 3) {
+                    cout << "You come up to the wardrobe" << endl;
+                    Sleep(1000);
+                    cout << "You see your clothes in it. Old and used" << endl;
+                    Sleep(1000);
+                }
+                else if (interactionPassive == 4) {
+                    cout << "You come up to the door" << endl;
+                    Sleep(1000);
+                    cout << "You can go to living room. To do that use command 'go'" << endl;
+                    Sleep(1000);
+                }
 
+                else {
+                    cout << "You can't do that." << endl;
+                }
             }
-            else if (interactionPassive == "use mirror") {
-                cout << "How do you think you can use that besides looking at yourself?" << endl;
-            }
-            else if (interactionPassive == "use bed") {
-                cout << "You are not tired." << endl;
-            }
-            else if (interactionPassive == "use wardrobe") {
-                cout << "You don't need to change your clothes right now." << endl;
-            }
-            else if (interactionPassive == "use door") {
-                cout << "You go to Living room." << endl;
+            else if (interactionPassive == 2) {
+                cout << "What do you want to use?" << endl << "1. Mirror" << endl << "2. Bed" << endl << "3. Wardrobe" << endl << "4. Door" << "?>";
+                if (interactionPassive == 1) {
+                    cout << "How do you think you can use that besides looking at yourself?" << endl;
+                }
+                else if (interactionPassive == 2) {
+                    cout << "You are not tired." << endl;
+                }
+                else if (interactionPassive == 3) {
+                    cout << "You don't need to change your clothes right now." << endl;
+                }
+                else if (interactionPassive == 4) {
+                    cout << "You go to Living room." << endl;
 
+                }
             }
-            else if (interactionPassive == "go living room" || interactionPassive == "go Living room" || interactionPassive == "go Living Room") {
+            else if (interactionPassive == 3) {
                 cout << "You go to living room." << endl;
+                interactionRoom = "living room";
                 Sleep(1000);
             }
             else {
                 cout << "You can't do that." << endl;
             }
 
-        } while (interactionPassive != "go living room" || interactionPassive != "go Living room" || interactionPassive != "go Living Room" || interactionPassive != "use door");
+        } while (interactionRoom != "living room");
 
-		do { //Living room section
+        do { //Living room section
             cout << "You are in the living room." << endl;
             Sleep(500);
             cout << "It's a bit empty, since you moved important stuff to your basement, but at least there are kitchen utensils in your kitchen." << endl;
@@ -367,94 +382,137 @@ int main()
             Sleep(500);
             if (hunger) cout << "Speaking of which, you feel a bit hungry." << endl;
             cout << "Oh, and also there are two doors. One goes to bathroom and the other one goes to basement." << endl;
+            cout << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
             cout << "?>";
             cin >> interactionPassive;
-            if (interactionPassive == "interact kitchen" || interactionPassive == "use kitchen") {
-                cout << "You prepare yourself some food. You don't feel hunger anymore" << endl;
-                hunger = false;
-            }
-            else if (interactionPassive == "use door") {
-                cout << "Which one?" << endl << "?>";
+            if (interactionPassive == 1) {
+                cout << endl << "1. Kitchen utensils" << endl << "2. Doors" << endl << endl << "?>";
                 cin >> interactionPassive;
-                if (interactionPassive == "bathroom" || interactionPassive == "Bathroom") {
-                    cout << "You go to bathroom" << endl;
-                    interactionPassive = "bathroom";
+                if (interactionPassive == 1 && hunger == true) {
+                    cout << "You prepare some bread with old cheese." << endl;
+                    cout << "You don't feel hungry anymore." << endl;
+                    hunger = false;
                 }
-                if (interactionPassive == "basement" || interactionPassive == "Basement") {
-                    cout << "You go to basement" << endl;
-                    interactionPassive = "basement";
+                else if (interactionPassive == 1 && hunger == false) {
+                    cout << "You don't feel hungry." << endl;
+                }
+                else if (interactionPassive == 2) {
+                    cout << "Which one?" << endl << "1. Bathroom" << endl << "2. Basement" << endl << endl << "?>";
+                    cin >> interactionPassive;
+                    if (interactionPassive == 1) {
+                        cout << "You go to bathroom" << endl;
+                        interactionRoom = "bathroom";
+                    }
+                    if (interactionPassive == 2) {
+                        cout << "You go to basement" << endl;
+                        interactionRoom = "basement";
+                    }
                 }
             }
-        } while (interactionPassive == "bathroom" || interactionPassive == "basement");
-        if (interactionPassive == "bathroom") {
+
+        } while (interactionRoom == "living room");
+        if (interactionRoom == "bathroom") {
             do { //Bathroom section
                 cout << "You see a sink and a toilet." << endl;
                 cout << "Other than that there's nothing interesting here." << endl;
-                cout << "?>";
+                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
                 cin >> interactionPassive;
-                if (interactionPassive == "use sink" || interactionPassive == "interact sink") {
-                    cout << "Old sink. At least it does not leak, but you could use something newer." << endl;
+                if (interactionPassive == 1) {
+                    cout << endl << "1. Sink" << endl << "2. Toilet" << endl << "3. Door" << endl << endl << "?>";
+                    if (interactionPassive == 1) {
+                        cout << "Old sink. At least it does not leak, but you could use something newer." << endl;
+                    }
+                    else if (interactionPassive == 2) {
+                        cout << "Well... It is actually a chair with a dirty bucket, but you cannot afford anything else... for now." << endl;
+                    }
+                    else if (interactionPassive == 3) {
+                        cout << "You go to living room." << endl;
+                        interactionRoom = "living room";
+                    }
+                    else {
+                        cout << "You can't do that." << endl;
+                    }
                 }
-                else if (interactionPassive == "use toilet" || interactionPassive == "interact toilet") {
-                    cout << "Well... It is actually a chair with a dirty bucket, but you cannot afford anything else... for now." << endl;
+                else if (interactionPassive == 2) {
+                    cout << endl << "1. Sink" << endl << "2. Toilet" << endl << "?>";
+                    if (interactionPassive == 1) {
+                        cout << "You don't need to use it." << endl;
+                    }
+                    else if (interactionPassive == 2) {
+                        cout << "You don't feel the need to use it." << endl;
+                    }
+                    else {
+                        cout << "You can't do that." << endl;
+                    }
                 }
-                else if (interactionPassive == "use door") {
+                else if (interactionPassive == 3) {
                     cout << "You go to living room." << endl;
-                    interactionPassive = "living room";
+                    interactionRoom = "living room";
                 }
                 else {
                     cout << "You can't do that." << endl;
-                } while (interactionPassive == "living room");
-            } while (interactionPassive == "");
-        }
-        if (interactionPassive == "basement") {
-			int* invCheck = new int();
-            do { //basement section
-				cout << "You are in the basement." << endl;
-				cout << "It is a bit dark, but you can see your desk, a chair and The Machine." << endl;
-				cout << "...You still need to come up with some kind of name for it." << endl;
-				cout << "?>";
-				cin >> interactionPassive;
-                if (interactionPassive == "interact desk" || interactionPassive == "use desk") {
-                    cout << "You come up to the desk." << endl;
-                    cout << "It is a bit dusty, but you can still see your notes and blueprints on it." << endl;
-                    cout << "You also found your trusty wrench and a screwdriver." << endl;
-					cout << "You take them with you." << endl;
-                    for (int i =0;*invCheck < 2;i++) {
-                        if (player.Inventory[i] == "0" || *invCheck == 0)
-                        {
-                            player.Inventory[i] = "wrench";
-                            *invCheck++;
-
-                        }
-                        else if (player.Inventory[i] == "0" || *invCheck == 1)
-                        {
-                            player.Inventory[i] = "screwdriver";
-                            *invCheck++;
-                        }
-                    }
-					cout << "You unlocked a new operation! Type 'inv' or 'inventory' to check your inventory." << endl;
-					cout << "?>";
-					cin >> interactionPassive;
-					
                 }
-                delete invCheck;
-
-			} while (interactionPassive == "living room" || interactionPassive == "");
+            } while (interactionRoom == "bathroom");
         }
+        if (interactionRoom == "basement") {
+            int* invCheck = new int(); //This is a pointer to check if player has something in their inventory
+            char* toolsTake = new char();
+            do { //basement section
+                cout << "You are in the basement." << endl;
+                cout << "It is a bit dark, but you can see your desk, a chair and The Machine." << endl;
+                cout << "...You still need to come up with some kind of name for it." << endl;
+                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
+                cin >> interactionPassive;
+                if (interactionPassive == 1) {
+                    cout << endl << "1. Desk" << endl << "2. Chair" << endl << "3. The Machine" << endl << "4. Door" << endl << endl << "?>";
+                    if (interactionPassive == 1) {
+                        cout << "You come up to the desk." << endl;
+                        cout << "It is a bit dusty, but you can still see your notes and blueprints on it." << endl;
+                        cout << "You also found your trusty wrench and a screwdriver." << endl;
+                        cout << "You take them with you." << endl;
+                        cout << "Do you want to take them? (y/n): ";
+                        cin >> toolsTake;
+                        if (*toolsTake == 'y') {
+                            for (int i = 0;*invCheck < 2;i++) {
+                                if (player.Inventory[i] == "0" || *invCheck == 0)
+                                {
+                                    player.Inventory[i] = "wrench";
+                                    *invCheck++;
+
+                                }
+                                else if (player.Inventory[i] == "0" || *invCheck == 1)
+                                {
+                                    player.Inventory[i] = "screwdriver";
+                                    *invCheck++;
+                                }
+                            }
+                            cout << "You unlocked a new operation! Type 'inv' or 'inventory' to check your inventory." << endl;
+                        }
+                        else cout << "You left them on the desk." << endl;
+                        delete toolsTake;
+
+                        cout << "?>";
+                        cin >> interactionPassive;
+
+                    }
+                    delete invCheck;
+
+                }
+            } while (interactionRoom == "living room");
             //Exeption in case of player doing something I wasn't able to foresee and going off the script
-            cout << "Oops! It appears that I didn't foresee this eventuality. How about we will start again from the start?" << endl << "?>";
+            system("CLS");
+            cout << "Oops! It appears that I didn't foresee this eventuality. How about we will start again from the start?" << endl << "1. Yes" << endl << "2. No" "?>";
             cin >> interactionPassive;
-            if (interactionPassive == "yes" || interactionPassive == "Yes") cout << "Alright, then let us begin from the start." << endl;
+            if (interactionPassive == 1) cout << "Alright, then let us begin from the start." << endl;
             else {
                 cout << "That's fine. You can start again in your own time (and from the beginning, since I didn't yet" << endl << "learned how to do save system :(. )";
                 Sleep(5000);
                 return 0;
             }
-        
-    } while (interactionPassive == "");
 
-    return 0;
-    
+        } while (interactionRoom == "a");
+
+        return 0;
+
+	}while (true);
 }
-
