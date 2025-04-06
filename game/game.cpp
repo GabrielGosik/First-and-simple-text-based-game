@@ -15,6 +15,22 @@
 
 using namespace std;
 
+void inventoryCheck(player player) {
+	cout << "You check your inventory." << endl;
+	Sleep(1000);
+	cout << "You have:" << endl;
+	for (int i = 0; i < 10; i++) {
+		if (player.Inventory[i] != "0") {
+			cout << player.Inventory[i] << endl;
+		}
+	}
+}
+
+void inventoryCheckCheck(bool invCheck, player player) {
+	if (invCheck == false) cout << "Your inventory is empty." << endl;
+	else inventoryCheck(player);
+}
+
 class enemy {
     int HP;
     int dmgMin;
@@ -36,7 +52,7 @@ public:
 
 int main()
 {
-    bool hunger = true;
+    bool hunger = true, invCheck = false;
     string charName;
     char nameChoice;
     int nameChoiceInt = 0;
@@ -311,7 +327,7 @@ int main()
             Sleep(1000);
             cout << "You see a mirror, a bed, a wardrobe and a door." << endl;
             Sleep(1000);
-            cout << "What do you want to do? (type in correct number)." << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
+            cout << "What do you want to do? (type in correct number)." << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << "4. Check inventory" << endl << endl << "?>";
             cin >> interactionPassive;
 
             if (interactionPassive == 1) {
@@ -368,6 +384,12 @@ int main()
                 interactionRoom = "living room";
                 Sleep(1000);
             }
+			else if (interactionPassive == 4) {
+				if (invCheck == false) 
+					cout << "Your inventory is empty." << endl;
+                else
+					inventoryCheck(player);
+			}
             else {
                 cout << "You can't do that." << endl;
             }
@@ -382,7 +404,7 @@ int main()
             Sleep(500);
             if (hunger) cout << "Speaking of which, you feel a bit hungry." << endl;
             cout << "Oh, and also there are two doors. One goes to bathroom and the other one goes to basement." << endl;
-            cout << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
+            cout << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << "4. Check inventory" << endl << endl << "?>";
             cout << "?>";
             cin >> interactionPassive;
             if (interactionPassive == 1) {
