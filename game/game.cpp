@@ -1,13 +1,12 @@
 ﻿#include <iostream>
 #include <cstdlib>
 #include <stdio.h>
-#include <time.h>
+#include <ctime>
 #include <dos.h>
-#include <windows.h>
 #include <string>
 #ifdef _WIN32
 #include <io.h>
-#define access _access
+#include <windows.h>
 
 #else
 #include <unistd.h>
@@ -23,7 +22,7 @@ public:
     bool alive = true;
 };
 
-using namespace std;
+
 class player {
 public:
     int HP = 10;
@@ -32,9 +31,9 @@ public:
     int dmgMax = 5;
     int armorClass = 10;
     int level = 1;
-    string Inventory[10] = { "0","0","0","0","0","0","0","0","0","0" };
+    std::string Inventory[10] = { "0","0","0","0","0","0","0","0","0","0" };
 };
-
+using namespace std;          //For some reason that line has caused problems with std:: stuff
 string inventoryCheck(player a) {
 	cout << "You check your inventory." << endl;
 	Sleep(1000);
@@ -511,6 +510,7 @@ int main() {
 
 
                 }
+            }
                 else if (interactionPassive == 3) {
                     cout << "Which one?" << endl << "1. Bathroom" << endl << "2. Basement" << endl << endl << "?>";
                     cin >> interactionPassive;
@@ -531,7 +531,8 @@ int main() {
                     else inventoryCheck(player);
                 }
                 cout << endl;
-            } while (interactionRoom == "living room");
+            
+
             if (interactionRoom == "bathroom") {
                 do { //Bathroom section
                     cout << "You see a sink and a toilet." << endl;
@@ -581,7 +582,8 @@ int main() {
                     }
                     cout << endl;
                 } while (interactionRoom == "bathroom");
-            }
+            } while (interactionRoom == "living room");
+
             if (interactionRoom == "basement") {
                 int* invCheck = new int(); //This is a pointer to check if player has something in their inventory
                 char* toolsTake = new char();
@@ -599,7 +601,7 @@ int main() {
                             cout << "You also found your trusty wrench and a screwdriver." << endl;
                             cout << "You take them with you." << endl;
                             cout << "Do you want to take them? (y/n): ";
-                            cin >> toolsTake;
+                            cin >> *toolsTake;
                             if (*toolsTake == 'y') {
                                 for (int i = 0;*invCheck < 2;i++) {
                                     if (player.Inventory[i] == "0" || *invCheck == 0)
@@ -641,7 +643,7 @@ int main() {
                                 do {
                                     *turn = 0;
                                     system("CLS");
-                                    if (turn = 0) {
+                                    if (*turn == 0) {
                                         cout << charName << " HP: " << player.HP << endl << endl;
                                         cout << "Actions:" << endl << "1. Attack" << endl << "2. Check" << endl << "3. Defend" << endl << "4. Run (NOT POSSIBLE)" << endl << "!>";
                                         cin >> interactionActive;
@@ -921,13 +923,15 @@ int main() {
                     return 0;
                 }
 
-            } while (interactionRoom == "a");
+            }
+        }while (interactionRoom == "a");
 
 
 
-        } while (true);
-        
-    }while (true);
-    return 0;
-}
+
+
+        } while (interactionRoom == "a");
+        return 0;
+    }
+
 // If you are seeing this, then I'm sorry that you've read through that mess. Probably in the future from now any code I'll create will be more readable
