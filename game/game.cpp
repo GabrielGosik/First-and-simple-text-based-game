@@ -32,11 +32,13 @@ void inventoryCheckCheck(bool invCheck, player player) {
 }
 
 class enemy {
+public:
     int HP;
     int dmgMin;
     int dmgMax;
     int armorClass;
     string enemyName;
+	bool alive = true;
 };
 
 class player {
@@ -52,10 +54,11 @@ public:
 
 int main()
 {
-    bool hunger = true, invCheck = false;
+
+    bool hunger = true, invCheckUnlock = false;
     string charName;
     char nameChoice;
-    int nameChoiceInt = 0;
+    int nameChoiceInt = 0, interactionActive = 0;
 
     cout << "Name your character: ";
     cin >> charName;
@@ -385,7 +388,7 @@ int main()
                 Sleep(1000);
             }
 			else if (interactionPassive == 4) {
-				if (invCheck == false) 
+				if (invCheckUnlock == false) 
 					cout << "Your inventory is empty." << endl;
                 else
 					inventoryCheck(player);
@@ -431,13 +434,58 @@ int main()
                     }
                 }
             }
-
+            else if (interactionPassive == 2) {
+				cout << endl << "1. Kitchen utensils" << endl << "2. Doors" << endl << endl << "?>";
+				cin >> interactionPassive;
+				if (interactionPassive == 1 && hunger == false) {
+					cout << "You don't need to use them." << endl;
+				}
+                else if(interactionPassive == 1 && hunger == true) {
+					cout << "You prepare some bread with old cheese." << endl;
+					cout << "You don't feel hungry anymore." << endl;
+					hunger = false;
+				}
+				else if (interactionPassive == 2) {
+					cout << "Which one?" << endl << "1. Bathroom" << endl << "2. Basement" << endl << endl << "?>";
+					cin >> interactionPassive;
+					if (interactionPassive == 1) {
+						cout << "You go to bathroom" << endl;
+						interactionRoom = "bathroom";
+					}
+					if (interactionPassive == 2) {
+						cout << "You go to basement" << endl;
+						interactionRoom = "basement";
+					}
+					else {
+						cout << "You can't do that." << endl;
+					}
+				}
+			}
+            else if (interactionPassive == 3) {
+                cout << "Which one?" << endl << "1. Bathroom" << endl << "2. Basement" << endl << endl << "?>";
+                cin >> interactionPassive;
+                if (interactionPassive == 1) {
+                    cout << "You go to bathroom" << endl;
+                    interactionRoom = "bathroom";
+                }
+                if (interactionPassive == 2) {
+                    cout << "You go to basement" << endl;
+                    interactionRoom = "basement";
+                }
+                else {
+                    cout << "You can't do that." << endl;
+                }
+            }
+            else if(interactionPassive == 4){
+					if (invCheckUnlock == false) cout << "Your inventory is empty." << endl;
+					else inventoryCheck(player);
+                }
         } while (interactionRoom == "living room");
         if (interactionRoom == "bathroom") {
             do { //Bathroom section
                 cout << "You see a sink and a toilet." << endl;
                 cout << "Other than that there's nothing interesting here." << endl;
-                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
+                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << "4. Check inventory" << endl << endl << "?>";
                 cin >> interactionPassive;
                 if (interactionPassive == 1) {
                     cout << endl << "1. Sink" << endl << "2. Toilet" << endl << "3. Door" << endl << endl << "?>";
@@ -471,6 +519,10 @@ int main()
                     cout << "You go to living room." << endl;
                     interactionRoom = "living room";
                 }
+                else if (interactionPassive == 4) {
+                    if (invCheckUnlock == false) cout << "Your inventory is empty." << endl;
+                    else inventoryCheck(player);
+                }
                 else {
                     cout << "You can't do that." << endl;
                 }
@@ -483,7 +535,7 @@ int main()
                 cout << "You are in the basement." << endl;
                 cout << "It is a bit dark, but you can see your desk, a chair and The Machine." << endl;
                 cout << "...You still need to come up with some kind of name for it." << endl;
-                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << endl << "?>";
+                cout << endl << "1. Interact" << endl << "2. Use" << endl << "3. Go" << endl << "4. Check inventory" << endl << endl << "?>";
                 cin >> interactionPassive;
                 if (interactionPassive == 1) {
                     cout << endl << "1. Desk" << endl << "2. Chair" << endl << "3. The Machine" << endl << "4. Door" << endl << endl << "?>";
@@ -508,11 +560,33 @@ int main()
                                     *invCheck++;
                                 }
                             }
-                            cout << "You unlocked a new operation! Type 'inv' or 'inventory' to check your inventory." << endl;
+                            cout << "Inventory unlocked." << endl;
+							invCheckUnlock = true;
                         }
                         else cout << "You left them on the desk." << endl;
                         delete toolsTake;
+                        if (invCheckUnlock == true) {
+							cout << "You hear some noise from behind the desk." << endl;
+							Sleep(1000);
+							cout << "Suddenly, a rat jumps out of behind the desk" << endl;
+							cout << "Two more follow it" << endl;
+							Sleep(1000);
+							cout << "You had to get rid of them long ago. I think this is a good time to do it." << endl;
+							system("CLS"); //Fight Begins
+							enemy rat1, rat2, rat3;
+							rat1.HP = 5, rat2.HP = 5, rat3.HP = 5;
+							rat1.dmgMin = 1, rat2.dmgMin = 1, rat3.dmgMin = 1;
+							rat1.dmgMax = 1, rat2.dmgMax = 1, rat3.dmgMax = 1; //There has to be a way to do it better, but I don't know how
+							rat1.armorClass = 5, rat2.armorClass = 5, rat3.armorClass = 5;
+							rat1.enemyName = "Rat 1", rat2.enemyName = "Rat 2", rat3.enemyName = "Rat 3";
+							cout << "Fight commences!" << endl;
+                            do {
+                                cout << "Actions:" << endl;
 
+                            } while (rat1.alive || rat2.alive || rat3.alive);
+
+
+                        }
                         cout << "?>";
                         cin >> interactionPassive;
 
