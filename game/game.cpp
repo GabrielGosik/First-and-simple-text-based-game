@@ -54,7 +54,7 @@ public:
 
 int main()
 {
-
+	srand(time(NULL)); //Random number generator seed
     bool hunger = true, invCheckUnlock = false;
     string charName;
     char nameChoice;
@@ -580,11 +580,30 @@ int main()
 							rat1.armorClass = 5, rat2.armorClass = 5, rat3.armorClass = 5;
 							rat1.enemyName = "Rat 1", rat2.enemyName = "Rat 2", rat3.enemyName = "Rat 3";
 							cout << "Fight commences!" << endl;
+							bool* ratsAlive = new bool;
+							int* hitChance = new int;
                             do {
-                                cout << "Actions:" << endl;
-
-                            } while (rat1.alive || rat2.alive || rat3.alive);
-
+                                
+                                cout << "Actions:" << endl << "1. Attack" << endl << "2. Check" << endl << "3. Defend" << endl << "4. Run (Extremely small chance)" << endl << "!>";
+                                cin >> interactionActive;
+                                if (interactionActive == 1) {
+                                    cout << "Which one?" << endl;
+									if (rat1.alive == true) cout << "1. " << rat1.enemyName << endl;
+									if (rat2.alive == true) cout << "2. " << rat2.enemyName << endl;
+									if (rat3.alive == true) cout << "3. " << rat3.enemyName << endl;
+                                    cin >> interactionActive;
+                                    if (interactionActive == 1 && rat1.alive) {
+                                        cout << "You attack " << rat1.enemyName << "..." << endl;
+										*hitChance = rand() % 20 + 1;
+										Sleep(500);
+                                        if (*hitChance >= rat1.armorClass) {
+											cout << "You hit " << rat1.enemyName << "!" << endl;
+                                        }
+                                    }
+                                    
+                                }
+                            } while (*ratsAlive);
+							delete ratsAlive;
 
                         }
                         cout << "?>";
