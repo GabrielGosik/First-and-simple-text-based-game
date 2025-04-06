@@ -38,7 +38,14 @@ int enemyTurn(enemy enemy, player player) {
 	if (hitChance >= player.armorClass) { //If hit
 		damage = rand() % (enemy.dmgMax - enemy.dmgMin + 1) + enemy.dmgMin; //Damage calculation
 		player.HP -= damage;
-		cout << "You took " << damage << " damage." << endl;
+		if (player.HP <= 0) {
+			cout << "You died." << endl;
+			Sleep(2000);
+            death();
+		}
+        else {
+            cout << "You took " << damage << " damage." << endl;
+        }
 	}
 	else {
 		cout << "The attack missed!" << endl;
@@ -48,6 +55,18 @@ int enemyTurn(enemy enemy, player player) {
 int playerTurn(player player, enemy enemy) {
 	int playerAttack = rand() % (player.dmgMax - player.dmgMin + 1) + player.dmgMin;
 	return playerAttack;
+}
+void death() {
+	system("CLS");
+	cout << "You tried." << endl;
+	Sleep(1000);
+	cout << "But you failed." << endl;
+	Sleep(1000);
+	cout << "You died." << endl;
+	Sleep(1000);
+    cout << "Press any key to continue..." << endl;
+	cin.ignore();
+    terminate();
 }
 
 class enemy {
@@ -745,7 +764,7 @@ int main()
                     delete invCheck;
 
                 }
-            } while (interactionRoom == "living room");
+            } while (interactionRoom == "end");
             //Exeption in case of player doing something I wasn't able to foresee and going off the script
             system("CLS");
             cout << "Oops! It appears that I didn't foresee this eventuality. How about we will start again from the start?" << endl << "1. Yes" << endl << "2. No" "?>";
