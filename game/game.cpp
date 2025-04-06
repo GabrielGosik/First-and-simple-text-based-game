@@ -927,7 +927,7 @@ int main() {
 
         } while (true);
         
-    }
+    }while (true);
     return 0;
 }
 // If you are seeing this, then I'm sorry that you've read through that mess. Probably in the future from now any code I'll create will be more readable
