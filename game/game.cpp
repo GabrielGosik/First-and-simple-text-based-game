@@ -31,6 +31,25 @@ void inventoryCheckCheck(bool invCheck, player player) {
 	else inventoryCheck(player);
 }
 
+int enemyTurn(enemy enemy, player player) {
+    int damage, hitChance;
+	cout << enemy.enemyName << " attacks you..." << endl;
+	hitChance = rand() % 20 + 1; //Hit chance
+	if (hitChance >= player.armorClass) { //If hit
+		damage = rand() % (enemy.dmgMax - enemy.dmgMin + 1) + enemy.dmgMin; //Damage calculation
+		player.HP -= damage;
+		cout << "You took " << damage << " damage." << endl;
+	}
+	else {
+		cout << "The attack missed!" << endl;
+	}
+	return player.HP;
+}
+int playerTurn(player player, enemy enemy) {
+	int playerAttack = rand() % (player.dmgMax - player.dmgMin + 1) + player.dmgMin;
+	return playerAttack;
+}
+
 class enemy {
 public:
     int HP;
@@ -444,6 +463,8 @@ int main()
 					cout << "You prepare some bread with old cheese." << endl;
 					cout << "You don't feel hungry anymore." << endl;
 					hunger = false;
+					player.HP += 5;
+					player.dmgMax += 2;
 				}
 				else if (interactionPassive == 2) {
 					cout << "Which one?" << endl << "1. Bathroom" << endl << "2. Basement" << endl << endl << "?>";
@@ -582,28 +603,139 @@ int main()
 							cout << "Fight commences!" << endl;
 							bool* ratsAlive = new bool;
 							int* hitChance = new int;
+							int* damageHit = new int;
+							int* turn = new int;
                             do {
-                                
-                                cout << "Actions:" << endl << "1. Attack" << endl << "2. Check" << endl << "3. Defend" << endl << "4. Run (Extremely small chance)" << endl << "!>";
-                                cin >> interactionActive;
-                                if (interactionActive == 1) {
-                                    cout << "Which one?" << endl;
-									if (rat1.alive == true) cout << "1. " << rat1.enemyName << endl;
-									if (rat2.alive == true) cout << "2. " << rat2.enemyName << endl;
-									if (rat3.alive == true) cout << "3. " << rat3.enemyName << endl;
+                                *turn = 0;
+								system("CLS");
+                                if (turn = 0) {
+									cout << charName << " HP: " << player.HP << endl << endl;
+                                    cout << "Actions:" << endl << "1. Attack" << endl << "2. Check" << endl << "3. Defend" << endl << "4. Run (NOT POSSIBLE)" << endl << "!>";
                                     cin >> interactionActive;
-                                    if (interactionActive == 1 && rat1.alive) {
-                                        cout << "You attack " << rat1.enemyName << "..." << endl;
-										*hitChance = rand() % 20 + 1;
-										Sleep(500);
-                                        if (*hitChance >= rat1.armorClass) {
-											cout << "You hit " << rat1.enemyName << "!" << endl;
+                                    if (interactionActive == 1) {
+                                        cout << "Which one?" << endl;
+                                        if (rat1.alive == true) cout << "1. " << rat1.enemyName << endl;
+                                        if (rat2.alive == true) cout << "2. " << rat2.enemyName << endl;
+                                        if (rat3.alive == true) cout << "3. " << rat3.enemyName << endl;
+                                        cin >> interactionActive;
+                                        if (interactionActive == 1 && rat1.alive) {
+                                            cout << "You attack " << rat1.enemyName << "..." << endl;
+                                            *hitChance = rand() % 20 + 1;
+                                            Sleep(500);
+                                            if (*hitChance >= rat1.armorClass) {
+                                                cout << "You hit " << rat1.enemyName << "!" << endl;
+												*damageHit = rand() % (player.dmgMax - player.dmgMin + 1) + player.dmgMin;
+												cout << "You deal " << *damageHit << " damage." << endl;
+												rat1.HP -= *damageHit;
+												if (rat1.HP <= 0) {
+													cout << rat1.enemyName << " is dead." << endl;
+													rat1.alive = false;
+												}
+											}
+											else {
+												cout << "You missed!" << endl;
+                                            }
                                         }
+                                        else if (interactionActive == 2 && rat2.alive) {
+											cout << "You attack " << rat2.enemyName << "..." << endl;
+											*hitChance = rand() % 20 + 1;
+											Sleep(500);
+                                            if (*hitChance >= rat2.armorClass) {
+                                                cout << "You hit " << rat2.enemyName << "!" << endl;
+                                                *damageHit = rand() % (player.dmgMax - player.dmgMin + 1) + player.dmgMin;
+                                                cout << "You deal " << *damageHit << " damage." << endl;
+                                                rat2.HP -= *damageHit;
+                                                if (rat2.HP <= 0) {
+                                                    cout << rat2.enemyName << " is dead." << endl;
+                                                    rat2.alive = false;
+                                                }
+                                            }
+											else {
+												cout << "You missed!" << endl;
+											}
+										}
+                                        else if (interactionActive == 3 && rat3.alive) {
+                                            cout << "You attack " << rat3.enemyName << "..." << endl;
+                                            *hitChance = rand() % 20 + 1;
+                                            Sleep(500);
+                                            if (*hitChance >= rat3.armorClass) {
+                                                cout << "You hit " << rat3.enemyName << "!" << endl;
+                                                *damageHit = rand() % (player.dmgMax - player.dmgMin + 1) + player.dmgMin;
+                                                cout << "You deal " << *damageHit << " damage." << endl;
+                                                rat3.HP -= *damageHit;
+                                                if (rat3.HP <= 0) {
+                                                    cout << rat3.enemyName << " is dead." << endl;
+                                                    rat3.alive = false;
+                                                }
+                                            }
+                                            else {
+                                                cout << "You missed!" << endl;
+                                            }
+                                        }
+										else {
+											cout << "You can't do that." << endl;
+										}
+									}
+									else if (interactionActive == 2) {
+										cout << "Which one do you want to check?" << endl;
+										cout << "1. " << rat1.enemyName << endl;
+										cout << "2. " << rat2.enemyName << endl;
+										cout << "3. " << rat3.enemyName << endl;
+										cin >> interactionActive;
+										if (interactionActive == 1 && rat1.alive) {
+											cout << "You check " << rat1.enemyName << endl;
+											cout << rat1.enemyName << " has " << rat1.HP << " HP." << endl;
+										}
+										else if (interactionActive == 2 && rat2.alive) {
+											cout << "You check " << rat2.enemyName << endl;
+											cout << rat2.enemyName << " has " << rat2.HP << " HP." << endl;
+										}
+										else if (interactionActive == 3 && rat3.alive) {
+											cout << "You check " << rat3.enemyName << endl;
+											cout << rat3.enemyName << " has " << rat3.HP << " HP." << endl;
+										}
+									}
+									else if (interactionActive == 3) {
+										cout << "You try to defend yourself." << endl;
+										player.armorClass += 2;
+									}
+									else if (interactionActive == 4) {
+										cout << "You try to run away..." << endl;
+										Sleep(1000);
+										cout << "You failed." << endl; //This fight is important. Running away is not an option.
+									}
+									else {
+										cout << "You can't do that." << endl;
                                     }
+
+                                    *turn++;
+                                
                                     
+                                }
+                                else if (*turn == 1) {
+									player.HP = enemyTurn(rat1, player);
+                                    *turn++;
+                                }
+                                else if (*turn == 2) {
+									player.HP = enemyTurn(rat2, player);
+                                    *turn++;
+                                }
+								else if (*turn == 3) {
+                                    player.HP = enemyTurn(rat3, player);
+                                    *turn++;
+								}
+                                else {
+									if (rat1.alive == false && rat2.alive == false && rat3.alive == false) {
+										cout << "You won!" << endl;
+										*ratsAlive = false;
+									}
+                                    *turn = 0;
                                 }
                             } while (*ratsAlive);
 							delete ratsAlive;
+                            delete turn;
+							delete hitChance;
+							delete damageHit;
 
                         }
                         cout << "?>";
@@ -630,4 +762,4 @@ int main()
         return 0;
 
 	}while (true);
-}
+} // If you are seeing this, then I'm sorry that you've read through that mess. Probably in the future from now any code I'll create will be more readable
